@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 
 class Invoice extends Component {
@@ -44,7 +45,8 @@ class Invoice extends Component {
                           this.state.Seats.map(data => (
                             <span key={data}>{data}, </span>
                           ))
-                        }</h6>
+                        }
+                        </h6>
                       </td>
                       <td>
                         <h6>{this.state.TotalSeats}</h6>
@@ -60,7 +62,7 @@ class Invoice extends Component {
 
               <div>
                 <br />
-                <button onClick={() => { this.props.UpdatePage('BookSeats') }}>Book More Seats</button>
+                <button onClick={() => { this.props.history.push('/') }}>Book More Seats</button>
               </div>
             </div>
           </div>
@@ -70,4 +72,4 @@ class Invoice extends Component {
   }
 }
 
-export default Invoice
+export default withRouter(Invoice)

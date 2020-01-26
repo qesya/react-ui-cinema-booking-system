@@ -6,13 +6,15 @@ class SeatBooking extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectingSeats: []
+            selectingSeats: [],
+            tableGenerator: []
         }
     }
     componentDidMount() {
         axios.get('http://localhost:8080/seatData').then(res => {
-            // console.log(res.data)
             const resData = res.data;
+            this.setState({tableGenerator: resData})
+            console.log('TABLEGENERATOR', this.state.tableGenerator)
             for(let i=0;i<resData.length;i++){
                 if(resData[i].available === false){
                     document.getElementById(resData[i].seatNumber).setAttribute("disabled", true)
@@ -40,8 +42,21 @@ class SeatBooking extends Component {
     };
 
     render() {
-        const seatsColumns = ['1', '2', '3', '4', '5', '', '6', '7', '8', '9', '10', '11', '12'];
-        const seatsRows = ['A', 'B','C', 'D', 'E', '', 'F', 'G', 'H', 'I', 'J'];
+        // const seatsColumns = ['1', '2', '3', '4', '5', '', '6', '7', '8', '9', '10', '11', '12'];
+        // const seatsRows = ['A', 'B','C', 'D', 'E', '', 'F', 'G', 'H', 'I', 'J'];
+
+        // seatNumber - number
+        const seatsByNumbers= this.state.tableGenerator.map(x => x.seatNumber.slice(1))
+         //removing the duplicates and inserting a corridor
+        const seatsColumns = [...new Set(seatsByNumbers)]
+        seatsColumns.splice(5, 0,  '')
+
+        // seatNumber - letter
+        const seatsByLetters = this.state.tableGenerator.map(x => x.seatNumber.charAt(0))
+        //removing the duplicates and inserting a corridor
+        const seatsRows = [...new Set(seatsByLetters)]
+        seatsRows.splice(5, 0,  '')
+
         const seatsGenerator = () => {
             return (
                 <table id="seatsBlock">

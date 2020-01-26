@@ -1,35 +1,29 @@
 import React, { Component } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom'
 import SeatBooking from './Components/SeatBooking'
 import Invoice from './Components/Invoice'
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      CurrentPage: 'BookSeats'
-    }
-  }
-
-  UpdatePage = (page) => {
-    this.setState({
-      CurrentPage: page
-    })
-  }
-  componentDidMount() {
-  }
-
-  render() {
+  render () {
     return (
       <div>
-        {
-          (this.state.CurrentPage === 'BookSeats' ? <SeatBooking UpdatePage={this.UpdatePage} /> : '')
-        }
-        {
-          (this.state.CurrentPage === 'invoice' ? <Invoice UpdatePage={this.UpdatePage} /> : '')
-        }
+        <Router>
+          <Switch>
+            <Route exact path='/'>
+              <SeatBooking />
+            </Route>
+            <Route exact path='/invoice'>
+              <Invoice />
+            </Route>
+          </Switch>
+        </Router>
       </div>
     )
   }
 }
 
-export default App;
+export default App

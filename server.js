@@ -7,7 +7,7 @@ app.options('*', cors())
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.options(`*`, cors())
+app.options('*', cors())
 
 // Generating Default Dummy Data
 const CinemaSeat = []
